@@ -1,8 +1,7 @@
-interface OFetchOptions {
-  baseURL?: string
-  headers?: Record<string, string>;
-}
-export default function (url: string, options: OFetchOptions = {}) {
+import type { UseFetchOptions } from "#app";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function (url: string, options: UseFetchOptions<unknown, unknown, any, null, string, any> = {}) {
   options.headers = {};
 
   const token = useCookie("XSRF-TOKEN");
@@ -12,7 +11,7 @@ export default function (url: string, options: OFetchOptions = {}) {
   }
   options.baseURL = import.meta.env.VITE_BACKEND_URL
 
-  return useFetch("http://localhost:8000" + url, {
+  return useFetch( url, {
     ...options,
     credentials: "include",
     headers: {
