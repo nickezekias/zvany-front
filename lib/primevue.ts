@@ -20,7 +20,6 @@ const MyPreset = definePreset(Aura, {
 })
 
 export default {
-  ripple: true,
   inputVariant: 'outlined',
   preset: MyPreset,
   theme: {

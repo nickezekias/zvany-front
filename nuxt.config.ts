@@ -9,15 +9,25 @@ export default defineNuxtConfig({
     transpile: ["vue-i18n"],
   },
   compatibilityDate: "2024-11-01",
+  css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
   // typescript: { typeCheck: true },
-  modules: ["@nuxt/eslint", "@pinia/nuxt", "@primevue/nuxt-module"],
+  modules: [
+    "@nuxt/eslint",
+    "@pinia/nuxt",
+    "@nuxtjs/tailwindcss",
+    "@primevue/nuxt-module",
+  ],
   primevue: {
     autoImport: true,
     components: {
-      prefix: 'Prime'
+      prefix: "Prime",
     },
-    importTheme: { from: '@/lib/primevue.ts' },
+    importTheme: { from: "@/lib/primevue.ts" },
+    options: {
+      ripple: true,
+      inputVariant: "filled",
+    },
   },
   vite: {
     plugins: [

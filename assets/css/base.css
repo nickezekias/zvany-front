@@ -1,0 +1,22 @@
+@layer tailwind-base, primevue, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+.dbg-border {
+  border: 1px solid red !important;
+}
+
+.dbg-border-blue {
+  border: 1px solid blue !important;
+}
+
+.dbg-border-green {
+  border: 1px solid green !important;
+}
