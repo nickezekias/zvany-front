@@ -9,7 +9,10 @@ export default defineNuxtConfig({
     transpile: ["vue-i18n"],
   },
   compatibilityDate: "2024-11-01",
-  css: ["~/assets/css/main.css"],
+  css: [
+    "primeicons/primeicons.css",
+    "~/assets/css/main.css"
+  ],
   devtools: { enabled: true },
   // typescript: { typeCheck: true },
   modules: [
