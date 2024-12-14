@@ -9,18 +9,16 @@ export default defineNuxtConfig({
     transpile: ["vue-i18n"],
   },
   compatibilityDate: "2024-11-01",
-  css: [
-    "primeicons/primeicons.css",
-    "~/assets/css/main.css"
-  ],
+  css: ["primeicons/primeicons.css", "~/assets/css/main.css"],
   devtools: { enabled: true },
   // typescript: { typeCheck: true },
-  modules: [
-    "@nuxt/eslint",
-    "@pinia/nuxt",
-    "@nuxtjs/tailwindcss",
-    "@primevue/nuxt-module",
-  ],
+  modules: ["@nuxt/eslint", "@pinia/nuxt", "@primevue/nuxt-module"],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   primevue: {
     autoImport: true,
     components: {
@@ -29,7 +27,7 @@ export default defineNuxtConfig({
     importTheme: { from: "@/lib/primevue.ts" },
     options: {
       ripple: true,
-      inputVariant: "filled",
+      inputVariant: "outlined",
     },
   },
   vite: {
