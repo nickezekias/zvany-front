@@ -34,7 +34,6 @@ export const useAppStore = defineStore('appStore', () => {
   }
 
   return {
-    t,
     toastAPIError,
     toastError,
     toastSuccess

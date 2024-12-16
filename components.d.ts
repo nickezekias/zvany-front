@@ -11,6 +11,7 @@ declare module 'vue' {
     PrimeFloatLabel: typeof import('primevue/floatlabel')['default']
     PrimeInputText: typeof import('primevue/inputtext')['default']
     PrimePassword: typeof import('primevue/password')['default']
+    PrimeStepPanel: typeof import('primevue/steppanel')['default']
     PrimeToast: typeof import('primevue/toast')['default']
     PrimeToolbar: typeof import('primevue/toolbar')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

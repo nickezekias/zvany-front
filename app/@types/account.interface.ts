@@ -1,3 +1,6 @@
+import type Business from "../models/business.model"
+import type User from "../models/user.model"
+
 interface DBGetQueryFilter {
   sortBy: Array<string>
   itemsPerPage?: number
@@ -16,13 +19,20 @@ interface PasswordResetRequest {
 }
 
 interface RegisterRequest {
-  address: string
-  email: string
-  firstName: string
-  lastName: string
-  password: string
+  accountType: string
+  businessAddress: Business['address']
+  businessDescription: Business['description']
+  businessEmail: Business['email']
+  businessName: Business['name']
+  businessPhone: Business['phone']
+  businessWebsite: Business['website']
+  email: User['email']
+  firstName: User['firstName']
+  gender: User['gender']
+  lastName: User['lastName']
+  password: User['password']
   password_confirmation: string
-  phone: string
+  phone: User['phone']
 }
 
 export type { DBGetQueryFilter, LoginRequest, PasswordResetRequest, RegisterRequest }

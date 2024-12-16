@@ -3,9 +3,9 @@ import type { LoginRequest } from '@/app/@types/account.interface'
 
 import NikkInputText from '@/components/forms/NikkInputText.vue'
 import NikkInputPassword from '@/components/forms/NikkInputPassword.vue'
-import type { HttpError } from '~/app/@types/common.interface'
+// import type { HttpError } from '~/app/@types/common.interface'
 
-const appStore = useAppStore()
+// const appStore = useAppStore()
 const objStore = useAccountStore()
 const route = useRoute()
 const router = useRouter()
@@ -28,8 +28,8 @@ async function submit() {
       router.push('/dashboard')
     }
   } catch (e: unknown) {
-    console.warn("NODE_ENV", import.meta.env.MODE)
-    appStore.toastAPIError(e as HttpError)
+    console.error(e)
+    // appStore.toastAPIError(e as HttpError)
   } finally {
     loading.value = false
   }

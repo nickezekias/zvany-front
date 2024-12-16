@@ -10,12 +10,32 @@
     }
   },
 
+  "features": {
+    "account": {
+      "registerSuccessMessage": "Account created successfully"
+    }
+  },
+
   "labels": {
+    "address": "Address",
+    "business": "Business",
+    "description": "Description",
     "email": "Email",
-    "password": "Password",
+    "female": "Female",
+    "firstName": "First Name",
+    "lastName": "Last Name",
     "login": "Login",
+    "male": "Male",
+    "name": "Name",
+    "next": "Next",
     "operationFailure": "Operation Failure",
     "operationSuccess": "Operation Success",
-    "register": "Register"
+    "password": "Password",
+    "passwordConfirm": "Confirm Password",
+    "phone": "Phone",
+    "previous": "Previous",
+    "register": "Register",
+    "user": "User",
+    "website": "Website"
   }
 }

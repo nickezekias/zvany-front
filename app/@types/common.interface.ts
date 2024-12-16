@@ -65,14 +65,11 @@ interface HttpError {
     errors?: Record<string, unknown>;
   };
   status: number;
-  statusCode: string;
+  statusCode: number;
   statusText: string;
   statusMessage: string;
+  _value?: HttpError
+  value?: HttpError
 }
 
-interface OFetchResponse {
-  data: unknown
-  error: HttpError
-}
-
-export type { HttpError, OFetchResponse };
+export type { HttpError };
