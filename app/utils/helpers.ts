@@ -1,21 +1,33 @@
 import type { HttpError } from '../@types/common.interface'
 
-const getApiErrors = (error: HttpError, title = '') => {
+const getApiErrors = (errorPayload: HttpError, title = '') => {
   const errorMessage = 'backend.errors.http500'
+  let error = errorPayload;
+  if (errorPayload.value) {
+    error = errorPayload.value
+  } else if (errorPayload._value) {
+    error = errorPayload._value
+  }
 
   // Display custom error onLogin and getAuthenticatedUser fails
   if ('Fetch User' === error.name) {
     return 'backend.errors.auth.getAuthUserFailedMessage'
   }
 
-  // http 404
+  // http 404, 422,...
   if (!error.response) {
     if (error && error.config) {
       console.error(title, `API ${error.config.url} not found`)
+      console.error(title, error.data)
     } else {
       console.error(title, `API ${error.request} not found`)
+      console.error(title, error.data)
     }
-    return 'backend.errors.http404'
+    console.log(Object.getOwnPropertyNames(error))
+    if (error.statusCode == 422) {
+      return error.data.message
+    }
+    return error.message
   }
 
   // Console Log laravel stack errors
