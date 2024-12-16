@@ -20,13 +20,16 @@ const getApiErrors = (error: HttpError, title = '') => {
 
   // Console Log laravel stack errors
   if (import.meta.env.MODE === 'development') {
-    console.error(title, error.response._data)
-    console.error(title, error.response.status)
-    console.error(title, error.response.headers)
+    // console.error(error.status)
+    // console.error(error.request)
+    console.error("ERROR_OPTIONS", error.options)
+    console.error("ERROR_DATA", error.data)
+    console.error("ERROR_RESPONSE", error.response)
   }
   // nested laravel model resource objects data errors
   if (error.response._data && error.response._data.errors) {
-    return error.response._data.errors
+    // return error.response._data.errors
+    return error.response._data.message
   }
 
   // show custom controller error messages for errors other than http 500
