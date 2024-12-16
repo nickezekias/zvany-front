@@ -1,8 +1,21 @@
 {
+  "backend": {
+    "errors": {
+      "auth": {
+        "getAuthUserFailed": "Fetch User",
+        "getAuthUserFailedMessage": "Unable to fetch user after login, please try again later. Contact admin if problem persists"
+      },
+      "http404": "Page not found. Contact admin if problem persists",
+      "http500": "An error occurred on our end. Reload the page, and if the problem persists, contact admin"
+    }
+  },
+
   "labels": {
     "email": "Email",
     "password": "Password",
     "login": "Login",
+    "operationFailure": "Operation Failure",
+    "operationSuccess": "Operation Success",
     "register": "Register"
   }
 }

@@ -1,86 +1,62 @@
-import type { LoginRequest } from "~/app/@types/account.interface"
-import User from "~/app/models/user.model"
-import useApiFetch from "~/composables/useApiFetch"
+import type { LoginRequest } from "~/app/@types/account.interface";
+import User from "~/app/models/user.model";
+import useApiFetch from "~/composables/useApiFetch";
+import { $api } from '@/composables/api'
 
-export const useAccountStore = defineStore('accountStore', () => {
-  const user: Ref<User | null> = ref(null)
-  const loading = ref(false)
+export const useAccountStore = defineStore("accountStore", () => {
+  const user: Ref<User | null> = ref(null);
 
-  const isAuthenticated = computed(() => !!user.value)
+  const isAuthenticated = computed(() => !!user.value);
 
   async function getAuthenticatedUser() {
-    const { data } = await useApiFetch('/api/auth/user')
-    user.value = User.fromObject(data as never)
+    const response = await useApiFetch("/api/auth/user");
+    if (response.error) {
+      throw response.error;
+    }
+    console.log("GET_AUTH_USER_RESPONSE", response)
+    // @ts-expect-error not yet assigned type for response
+    user.value = User.fromObject(response.data.value?.data as never);
+    console.log("USER_VALUE", user)
   }
 
-  async function login(data: LoginRequest) {
+  async function login(data: LoginRequest): Promise<void> {
+    await $api("/sanctum/csrf-cookie");
+    await $api("/login", {
+      method: "POST",
+      body: data,
+    });
 
-    loading.value = true
-    try {
-      await useApiFetch('/sanctum/csrf-cookie')
-      await useApiFetch('/login', {
-        method: 'POST',
-        body: data
-      })
-
-      await useAccountStore().getAuthenticatedUser()
-    } catch (error) {
-      console.error(error)
-    } finally {
-      loading.value = false
-    }
+    await useAccountStore().getAuthenticatedUser();
   }
 
-  async function logout()
-  {
-    try {
-      await useApiFetch('/logout', {
-        method: 'POST'
-      })
+  async function logout() {
+    await $api("/logout", {
+      method: "POST",
+    });
 
-      user.value = null
-    } catch (error) {
-      console.error(error)
-    } finally {
-      loading.value = false
-    }
+    user.value = null;
   }
 
   async function resetPassword() {
-    loading.value = true
-    try {
-      await useApiFetch('/reset-password', {
-        method: 'POST'
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      loading.value = false
-    }
+    await $api("/reset-password", {
+      method: "POST",
+    });
   }
 
   async function forgotPassword(email: string) {
-    loading.value = true
-    try {
-      await useApiFetch(`/forgot-password?email=${email}`, {
-        method: 'POST',
-        body: { email }
-      })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      loading.value = false
-    }
+    await $api(`/forgot-password?email=${email}`, {
+      method: "POST",
+      body: { email },
+    });
   }
 
   return {
     isAuthenticated,
-    loading,
     user,
     forgotPassword,
     getAuthenticatedUser,
     login,
     logout,
-    resetPassword
-  }
-})
+    resetPassword,
+  };
+});

@@ -3,6 +3,7 @@ export default class User {
   address: string
   email: string
   firstName: string
+  isActive: boolean
   lastName: string
   password: string
   phone: string
@@ -17,6 +18,7 @@ export default class User {
     address: string,
     email: string,
     firstName: string,
+    isActive: boolean,
     lastName: string,
     password: string,
     phone: string,
@@ -26,6 +28,7 @@ export default class User {
     this.address = address
     this.email = email
     this.firstName = firstName
+    this.isActive = isActive
     this.lastName = lastName
     this.password = password
     this.phone = phone
@@ -37,6 +40,7 @@ export default class User {
     address: string
     email: string
     firstName: string
+    isActive: boolean
     lastName: string
     password: string
     phone: string
@@ -47,6 +51,7 @@ export default class User {
       data.address,
       data.email,
       data.firstName,
+      data.isActive,
       data.lastName,
       data.password,
       data.phone,
@@ -55,7 +60,11 @@ export default class User {
   }
 
   static initEmpty(): User {
-    return new User("", "", "", "", "", "", "", [])
+    return new User("", "", "", "", true, "", "", "", [])
+  }
+
+  public checkIsActive(): boolean {
+    return this.isActive
   }
 
   public isAdmin(): boolean {

@@ -1,26 +1,38 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import type { LoginRequest } from "@/app/@types/account.interface";
+import type { LoginRequest } from '@/app/@types/account.interface'
 
 import NikkInputText from '@/components/forms/NikkInputText.vue'
 import NikkInputPassword from '@/components/forms/NikkInputPassword.vue'
+import type { HttpError } from '~/app/@types/common.interface'
 
+const appStore = useAppStore()
 const objStore = useAccountStore()
+const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
-const toast = useToast()
 
-const loading: Ref<boolean> = ref(false);
+const loading: Ref<boolean> = ref(false)
 const state: Ref<LoginRequest> = ref({
-  email: "",
-  password: "",
-});
+  email: '',
+  password: '',
+})
 
 async function submit() {
-  loading.value = true;
-  await objStore.login(state.value);
-  router.push('/dashboard')
-  toast.add({ severity: "info", summary: t("messages.loading"), life: 3000 });
+  loading.value = true
+  try {
+    await objStore.login(state.value)
+    console.log('AUTH_USER', objStore.user)
+
+    if (route.query.redirect) {
+      router.push(`${route.query.redirect}`)
+    } else {
+      router.push('/dashboard')
+    }
+  } catch (e: unknown) {
+    console.warn("NODE_ENV", import.meta.env.MODE)
+    appStore.toastAPIError(e as HttpError)
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
