@@ -7,9 +7,6 @@ const accountStore = useAccountStore()
 const { t } = useI18n()
 
 const { logout } = useSanctumAuth<User>()
-// const user = useSanctumUser<User>()
-// const userValue = computed(() => user.value)
-
 
 const items = ref([
   {
