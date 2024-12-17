@@ -1,6 +1,9 @@
+import Business from "./business.model"
+
 export default class User {
   id: string
   address: string
+  business: Business | null
   email: string
   firstName: string
   fullName: string
@@ -30,6 +33,7 @@ export default class User {
   constructor(
     id: string,
     address: string,
+    business: Business | null,
     email: string,
     firstName: string,
     fullName: string,
@@ -46,6 +50,7 @@ export default class User {
   ) {
     this.id = id
     this.address = address
+    this.business = business
     this.email = email
     this.firstName = firstName
     this.fullName = fullName
@@ -64,6 +69,7 @@ export default class User {
   static fromObject(data: {
     id: string
     address: string
+    business: Business | null
     email: string
     firstName: string
     fullName: string
@@ -81,6 +87,7 @@ export default class User {
     return new User(
       data.id,
       data.address,
+      data.business,
       data.email,
       data.firstName,
       data.fullName,
@@ -101,6 +108,7 @@ export default class User {
     return new User(
       '',
       '',
+      Business.initEmpty(),
       '',
       '',
       '',

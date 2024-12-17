@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import UserAvatarMenu from '@/components/user/UserAvatarMenu.vue'
 
+const accountStore = useAccountStore()
+
 const activeItem = ref(null)
 const openMenus = ref({}) // Tracks open menus at multiple levels
 
@@ -35,6 +37,7 @@ const menuItems = ref([
 ])
 
 function toggleSubMenu(item, level) {
+  console.log()
   if (!item.children) {
     setActiveItem(item)
     return
@@ -59,7 +62,7 @@ function setActiveItem(item) {
       <div class="flex h-screen bg-surface-50 dark:bg-[#121212]">
         <!-- Sidebar -->
         <div class="w-64 shadow-sm bg-white dark:bg-[#18181b]">
-          <h1 class="text-2xl font-bold p-6 px-3">ZStore</h1>
+          <h1 class="text-2xl font-bold py-4 px-3">{{ accountStore.user.value.business.name }}</h1>
           <ul class="p-2">
             <li v-for="item in menuItems" :key="item.label" class="mb-1">
               <button
