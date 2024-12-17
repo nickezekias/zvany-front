@@ -32,7 +32,7 @@ export const useAccountStore = defineStore("accountStore", () => {
   }
 
   const getPostAuthRoute = computed((): string => {
-    return '/dashboard'
+    return '/'
   })
 
   const getLoginRoute = computed((): string => {
