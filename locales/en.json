@@ -25,6 +25,7 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "login": "Login",
+    "logout": "Logout",
     "male": "Male",
     "name": "Name",
     "next": "Next",

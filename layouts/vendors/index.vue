@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import UserAvatarMenu from '@/components/user/UserAvatarMenu.vue'
 
 const activeItem = ref(null)
 const openMenus = ref({}) // Tracks open menus at multiple levels
@@ -58,9 +59,7 @@ function setActiveItem(item) {
       <div class="flex h-screen bg-surface-50 dark:bg-[#121212]">
         <!-- Sidebar -->
         <div class="w-64 shadow-sm bg-white dark:bg-[#18181b]">
-          <h1 class="text-2xl font-bold p-6 px-3">
-            ZStore
-          </h1>
+          <h1 class="text-2xl font-bold p-6 px-3">ZStore</h1>
           <ul class="p-2">
             <li v-for="item in menuItems" :key="item.label" class="mb-1">
               <button
@@ -142,31 +141,14 @@ function setActiveItem(item) {
             <PrimeToolbar class="py-0 rounded-none">
               <template #start>
                 <div class="logo">
-                  <span>Zvany</span>
+                  <span class="font-bold">Zvany</span>
                 </div>
               </template>
-  
+
               <template #end>
-                <router-link
-                  to="/vendors/register"
-                  active-class="border-b border-primary"
-                  class="py-2"
-                >
-                  <PrimeButton
-                    text
-                    plain
-                    class=""
-                    :label="$t('labels.register')"
-                  />
-                </router-link>
-  
-                <router-link
-                  to="/vendors/login"
-                  active-class="border-b border-primary"
-                  class="ml-3 py-2"
-                >
-                  <PrimeButton text plain class="" :label="$t('labels.login')" />
-                </router-link>
+                <div class="flex align-items-center gap-2">
+                  <UserAvatarMenu />
+                </div>
               </template>
             </PrimeToolbar>
 

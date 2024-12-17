@@ -7,9 +7,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    PrimeAvatar: typeof import('primevue/avatar')['default']
     PrimeButton: typeof import('primevue/button')['default']
     PrimeFloatLabel: typeof import('primevue/floatlabel')['default']
     PrimeInputText: typeof import('primevue/inputtext')['default']
+    PrimeMenu: typeof import('primevue/menu')['default']
     PrimePassword: typeof import('primevue/password')['default']
     PrimeStepPanel: typeof import('primevue/steppanel')['default']
     PrimeToast: typeof import('primevue/toast')['default']
