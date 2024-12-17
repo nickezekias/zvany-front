@@ -16,6 +16,7 @@
     "@primevue/themes": "^4.2.5",
     "eslint": "^9.17.0",
     "nuxt": "^3.14.1592",
+    "nuxt-auth-sanctum": "^0.5.2",
     "pinia": "^2.3.0",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.5",

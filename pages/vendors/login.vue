@@ -5,6 +5,8 @@ import NikkInputText from '@/components/forms/NikkInputText.vue'
 import NikkInputPassword from '@/components/forms/NikkInputPassword.vue'
 import type { HttpError } from '~/app/@types/common.interface'
 
+const { login } = useSanctumAuth()
+
 const appStore = useAppStore()
 const objStore = useAccountStore()
 const route = useRoute()
@@ -18,7 +20,7 @@ const state: Ref<LoginRequest> = ref({
 async function submit() {
   loading.value = true
   try {
-    await objStore.login(state.value)
+    await login(state.value)
 
     if (route.query.redirect) {
       navigateTo(`${route.query.redirect}`, { replace: true })
