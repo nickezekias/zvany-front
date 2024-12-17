@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useAccountStore } from '@/stores/account.store'
+import type User from '@/app/models/user.model'
 
 const accountStore = useAccountStore()
 const { t } = useI18n()
+
+const { logout } = useSanctumAuth<User>()
+// const user = useSanctumUser<User>()
+// const userValue = computed(() => user.value)
+
 
 const items = ref([
   {
     label: t('labels.logout'),
     icon: 'pi pi-sign-out',
     command: async () => {
-      logout()
+      await onLogout()
     },
   },
 ])
@@ -22,8 +27,9 @@ const toggle = (event: Event) => {
   menu.value.toggle(event)
 }
 
-async function logout() {
-  await accountStore.logout()
+async function onLogout() {
+  await logout()
+  navigateTo(accountStore.getLoginRoute, { replace: true })
 }
 </script>
 
@@ -39,7 +45,9 @@ async function logout() {
       @click="toggle"
     >
       <PrimeAvatar
-        image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+        :label="accountStore.user.value.initials"
+        shape="circle"
+        class="text-primary bg-[#0099ff10] border-2 border-primary"
         style="width: 2.5rem; height: 2.5rem"
       />
 
