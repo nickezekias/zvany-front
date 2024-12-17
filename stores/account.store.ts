@@ -36,11 +36,21 @@ export const useAccountStore = defineStore("accountStore", () => {
     if (user.value && user.value.isAdmin()) {
       return '/admin/dashboard'
     } else if (user.value && user.value.isVendor()) {
-      return '/vendor/dashboard'
+      return '/vendors/dashboard'
     } else {
       return '/dashboard'
     }
   }
+
+  const getLoginRouteForRole = computed((): string => {
+    if (user.value && user.value.isAdmin()) {
+      return '/admin/login'
+    } else if (user.value && user.value.isVendor()) {
+      return '/vendors/login'
+    } else {
+      return '/login'
+    }
+  })
 
   const isGuest = (): boolean => {
     if (window.localStorage.getItem('guest') === '1') {
@@ -48,6 +58,8 @@ export const useAccountStore = defineStore("accountStore", () => {
     } else {
       return false
     }
+
+    return false
   }
 
   const setLoading = (val: boolean) => {
@@ -72,15 +84,12 @@ export const useAccountStore = defineStore("accountStore", () => {
   *  ACTIONS
   */
   async function getAuthenticatedUser() {
-    const response = await useApiFetch("/api/v1/users/authenticated");
-    console.log("GET_AUTH_USER_RESPONSE", response)
-
-    if (response.error) {
-      throw response.error;
-    }
+    const { error, data } = await useApiFetch("/api/v1/users/authenticated");
+    
+    if (!error.value && data.value) {
     // @ts-expect-error not yet assigned type for response
-    user.value = User.fromObject(response.data.value?.data as never);
-    console.log("USER_VALUE", user)
+      setAuthenticatedUser(User.fromObject(data.value.data))
+    } 
   }
 
   async function login(data: LoginRequest): Promise<void> {
@@ -130,6 +139,7 @@ export const useAccountStore = defineStore("accountStore", () => {
   }
 
   return {
+    getLoginRouteForRole,
     isAuthenticated,
     registerPayload,
     loading,
