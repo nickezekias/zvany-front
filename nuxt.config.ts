@@ -36,7 +36,16 @@ export default defineNuxtConfig({
     },
   },
   sanctum: {
-    baseUrl: 'http://localhost:80', // Laravel API
+    baseUrl: 'http://localhost:80',
+    endpoints: {
+      user: '/api/v1/users/authenticated',
+    },
+    globalMiddleware: {
+      enabled: false,
+      allow404WithoutAuth: true,
+    },
+    redirectIfAuthenticated: true,
+    redirectIfUnauthenticated: true,
   },
   vite: {
     plugins: [
