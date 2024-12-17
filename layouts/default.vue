@@ -9,11 +9,11 @@
       </template>
 
       <template #end>
-        <router-link to="/vendors/register" active-class="border-b border-primary" class="py-2">
+        <router-link to="/register" active-class="border-b border-primary" class="py-2">
           <PrimeButton text plain class="" :label="$t('labels.register')" />
         </router-link>
 
-        <router-link to="/vendors/login" active-class="border-b border-primary" class="ml-3 py-2">
+        <router-link to="/login" active-class="border-b border-primary" class="ml-3 py-2">
           <PrimeButton text plain class="" :label="$t('labels.login')" />
         </router-link>
       </template>

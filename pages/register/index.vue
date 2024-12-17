@@ -10,7 +10,6 @@ import User from '~/app/models/user.model';
 
 const accountStore = useAccountStore()
 const appStore = useAppStore()
-const router = useRouter()
 
 async function submit() {
   accountStore.setLoading(true)
@@ -25,7 +24,7 @@ async function submit() {
 
       await accountStore.register(accountStore.registerPayload)
       appStore.toastSuccess('labels.operationSuccess', 'features.account.registerSuccessMessage')
-      router.push(accountStore.getPostAuthRoute())
+      navigateTo(accountStore.getPostAuthRoute)
     }
   } catch (e: unknown) {
     console.error(e)
