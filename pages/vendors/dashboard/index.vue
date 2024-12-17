@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'vendors',
+  middleware: ['sanctum:auth']
 })
 </script>
 <template>
