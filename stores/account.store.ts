@@ -25,42 +25,30 @@ export const useAccountStore = defineStore("accountStore", () => {
     phone: '',
     password_confirmation: '',
   })
-  const user: Ref<User | null> = ref(null);
+  // const user: Ref<User | null> = ref(null);
 
   const clearAuthenticatedUser = (): void => {
     user.value = null
-    setIsGuest('1')
   }
 
-  const getPostAuthRoute = (): string => {
-    if (user.value && user.value.isAdmin()) {
-      return '/admin/dashboard'
-    } else if (user.value && user.value.isVendor()) {
-      return '/vendors/dashboard'
-    } else {
-      return '/dashboard'
-    }
-  }
-
-  const getLoginRouteForRole = computed((): string => {
-    if (user.value && user.value.isAdmin()) {
-      return '/admin/login'
-    } else if (user.value && user.value.isVendor()) {
-      return '/vendors/login'
-    } else {
-      return '/login'
-    }
+  const getPostAuthRoute = computed((): string => {
+    return '/dashboard'
   })
 
-  const isGuest = (): boolean => {
-    if (window.localStorage.getItem('guest') === '1') {
-      return true
-    } else {
-      return false
-    }
+  const getLoginRoute = computed((): string => {
+    return '/login'
+  })
 
-    return false
-  }
+  const user = computed({
+    get: (): Ref<User|null> => {
+      const sanctumUser = useSanctumUser<Record<string, User>>().value
+      if (sanctumUser) {
+        return ref(User.fromObject(sanctumUser.data))
+      }
+      return ref(null)
+    },
+    set: (value: User | null) => user.value = value
+  })
 
   const setLoading = (val: boolean) => {
     loading.value = val;
@@ -68,11 +56,6 @@ export const useAccountStore = defineStore("accountStore", () => {
 
   const setAuthenticatedUser = (data: User): void => {
     user.value = data
-    setIsGuest('0')
-  }
-
-  const setIsGuest = (value: string): void => {
-    window.localStorage.setItem('guest', value)
   }
 
   const setRegisterPayload = (data: RegisterRequest): void => {
@@ -139,14 +122,13 @@ export const useAccountStore = defineStore("accountStore", () => {
   }
 
   return {
-    getLoginRouteForRole,
     isAuthenticated,
+    getLoginRoute,
+    getPostAuthRoute,
     registerPayload,
     loading,
     user,
 
-    isGuest,
-    getPostAuthRoute,
     setLoading,
     setRegisterPayload,
 
