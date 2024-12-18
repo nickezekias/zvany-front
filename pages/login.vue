@@ -20,8 +20,6 @@ async function submit() {
   try {
     await objStore.login(state.value)
 
-    await objStore.getAuthenticatedUser()
-
     if (route.query.redirect) {
       navigateTo(`${route.query.redirect}`, { replace: true })
     } else {
