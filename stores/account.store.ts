@@ -82,7 +82,7 @@ export const useAccountStore = defineStore("accountStore", () => {
       body: data,
     });
 
-    await getAuthenticatedUser();
+    // await getAuthenticatedUser();
   }
 
   async function logout() {
