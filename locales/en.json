@@ -13,17 +13,25 @@
   "features": {
     "account": {
       "registerSuccessMessage": "Account created successfully"
+    },
+    "vendors": {
+      "dashboardDesc": "Central Hub to Manage Your Products"
     }
   },
 
   "labels": {
     "address": "Address",
     "business": "Business",
+    "dashboard": "Dashboard",
     "description": "Description",
     "email": "Email",
     "female": "Female",
     "firstName": "First Name",
+    "inventory": "Inventory",
+    "inventoryAdjustment": "Inventory Adjustment | Inventory Adjustments",
     "lastName": "Last Name",
+    "license": "License",
+    "list": "List",
     "login": "Login",
     "logout": "Logout",
     "male": "Male",
@@ -33,8 +41,10 @@
     "operationSuccess": "Operation Success",
     "password": "Password",
     "passwordConfirm": "Confirm Password",
+    "payment": "Payment | Payments",
     "phone": "Phone",
     "previous": "Previous",
+    "product": "Product | Products",
     "register": "Register",
     "user": "User",
     "website": "Website"
