@@ -24,6 +24,7 @@ const getApiErrors = (errorPayload: HttpError, title = '') => {
       console.error(title, error.data)
     }
     console.log(Object.getOwnPropertyNames(error))
+    console.error(error.message)
     if (error.statusCode == 422) {
       return error.data.message
     }
