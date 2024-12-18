@@ -15,7 +15,8 @@
       "registerSuccessMessage": "Account created successfully"
     },
     "vendors": {
-      "dashboardDesc": "Central Hub to Manage Your Products"
+      "dashboardDesc": "Central Hub to Manage Your Products",
+      "productInventoryDesc": "Manage your products inventory"
     }
   },
 
