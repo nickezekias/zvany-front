@@ -1,40 +1,61 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserAvatarMenu from '@/components/user/UserAvatarMenu.vue'
+import { useI18n } from 'vue-i18n'
 
 const accountStore = useAccountStore()
+const { t } = useI18n()
 
 const activeItem = ref(null)
 const openMenus = ref({}) // Tracks open menus at multiple levels
 
 const menuItems = ref([
-  { label: 'Dashboard', icon: 'pi pi-home' },
-  { label: 'Profile', icon: 'pi pi-user' },
+  { label: t('labels.dashboard'), icon: 'pi pi-home', url: '/vendors/' },
+  // { label: 'Profile', icon: 'pi pi-user' },
   {
-    label: 'Settings',
-    icon: 'pi pi-cog',
+    label: t('labels.product', 2),
+    icon: 'pi pi-box',
     children: [
       {
-        label: 'Account',
-        icon: 'pi pi-user-edit',
-        children: [
+        label: t('labels.list'),
+        // icon: 'pi pi-user-edit',
+        /* children: [
           { label: 'Change Password', icon: 'pi pi-key' },
           { label: 'Two-Factor Authentication', icon: 'pi pi-shield' },
-        ],
+        ], */
       },
-      { label: 'Privacy', icon: 'pi pi-lock' },
+      { label: t('labels.inventoryAdjustment', 2) },
     ],
   },
-  { label: 'Messages', icon: 'pi pi-envelope' },
+  // { label: 'Messages', icon: 'pi pi-envelope' },
   {
-    label: 'More',
-    icon: 'pi pi-ellipsis-h',
+    label: t('labels.license'),
+    icon: 'pi pi-file',
     children: [
-      { label: 'Help', icon: 'pi pi-question-circle' },
-      { label: 'Logout', icon: 'pi pi-sign-out' },
+      { label: t('labels.payment', 2) },
+      // { label: 'Logout', icon: 'pi pi-sign-out' },
     ],
   },
 ])
+
+onMounted(() => {
+  menuItems.value.forEach((item) => {
+    if (item.url) {
+      //FIXME: see best ways to get current route with nuxt
+      if (item.url === window.location.pathname) {
+        activeItem.value = item
+      }
+    }
+    /* if (item.children) {
+      openMenus.value[`${0}-${item.label}`] = false
+      item.children.forEach((child) => {
+        if (child.children) {
+          openMenus.value[`${1}-${child.label}`] = false
+        }
+      })
+    } */
+  })
+})
 
 function toggleSubMenu(item, level) {
   console.log()
@@ -140,7 +161,7 @@ function setActiveItem(item) {
         </div>
         <!-- Content -->
         <div class="flex-1">
-          <div class="flex flex-col">
+          <div class="flex flex-col h-screen">
             <PrimeToolbar class="py-0 rounded-none">
               <template #start>
                 <div class="logo">
@@ -155,7 +176,7 @@ function setActiveItem(item) {
               </template>
             </PrimeToolbar>
 
-            <div class="flex-1 p-8">
+            <div class="flex-1 p-8 overflow-y-auto">
               <slot />
             </div>
           </div>
