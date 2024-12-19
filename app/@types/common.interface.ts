@@ -1,3 +1,9 @@
+interface DBGetQueryFilter {
+  sortBy: Array<string>
+  itemsPerPage?: number
+  sortDesc?: Array<string>
+  page?: number
+}
 interface HttpError {
   stack: string;
   message: string;
@@ -72,4 +78,4 @@ interface HttpError {
   value?: HttpError
 }
 
-export type { HttpError };
+export type { DBGetQueryFilter, HttpError };
