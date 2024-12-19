@@ -1,3 +1,4 @@
+import type { DBGetQueryFilter } from '../@types/account.interface';
 import type { HttpError } from '../@types/common.interface'
 
 const getApiErrors = (errorPayload: HttpError, title = '') => {
@@ -58,4 +59,35 @@ function getImageSrc(url: string) {
   return `${imgUrl}/${url}`
 }
 
-export { getApiErrors, getImageSrc }
+function getQueryFromFilter(filter: DBGetQueryFilter): string {
+  let query = '?'
+  if (filter && filter.itemsPerPage) {
+    query += `itemsPerPage=${filter.itemsPerPage}`
+  }
+  if (filter && filter.page) {
+    query += `&page=${filter.page}`
+  }
+  if (filter && filter.sortBy) {
+    const sortBy = filter.sortBy
+    for (let index = 0; index < sortBy.length; index++) {
+      if (index === 0) {
+        query += `&sortBy=${sortBy[index]}`
+      } else {
+        query += `,${sortBy[index]}`
+      }
+    }
+  }
+  if (filter && filter.sortDesc) {
+    const filterBy = filter.sortDesc
+    for (let index = 0; index < filterBy.length; index++) {
+      if (index === 0) {
+        query += `&sortDesc=${filterBy[index]}`
+      } else {
+        query += `,${filterBy[index]}`
+      }
+    }
+  }
+  return query
+}
+
+export { getApiErrors, getImageSrc, getQueryFromFilter }
