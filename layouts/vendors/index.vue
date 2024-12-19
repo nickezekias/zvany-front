@@ -6,15 +6,15 @@ import TopBar from '@/layouts/vendors/TopBar.vue'
 <template>
   <div class="flex">
     <div id="app" class="w-full">
-      <div class="flex h-screen bg-surface-50 dark:bg-[#121212]">
-
+      <div
+        class="flex bg-surface-50 dark:bg-[#121212] w-screen overflow-hidden"
+      >
         <!-- Sidebar -->
-        <sidebar />
-        
+        <sidebar class="w-[250px] hidden md:block" />
+
         <!-- Content -->
-        <div class="flex-1">
+        <div class="main-content">
           <div class="flex flex-col h-screen">
-            
             <!-- Top Bar -->
             <TopBar />
 
@@ -28,4 +28,18 @@ import TopBar from '@/layouts/vendors/TopBar.vue'
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 250px);
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    width: 100%;
+  }
+}
+</style>

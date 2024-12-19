@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     PrimeAvatar: typeof import('primevue/avatar')['default']
     PrimeButton: typeof import('primevue/button')['default']
+    PrimeCard: typeof import('primevue/card')['default']
     PrimeChart: typeof import('primevue/chart')['default']
     PrimeFloatLabel: typeof import('primevue/floatlabel')['default']
     PrimeInputText: typeof import('primevue/inputtext')['default']
