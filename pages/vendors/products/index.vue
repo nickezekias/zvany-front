@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import type { HttpError } from '~/app/@types/common.interface'
 
 definePageMeta({
   layout: 'vendors',
+  pageTransition: false,
   middleware: ['sanctum:auth'],
 })
 
-const products = ref([
+const objStore = useProductStore()
+const appStore = useAppStore()
+
+try {
+  await objStore.getAll()
+} catch(e) {
+  appStore.toastAPIError(e as HttpError)
+}
+
+/* const products = ref([
   {
     image: 'https://via.placeholder.com/100',
     name: 'Wireless Headphones',
@@ -57,8 +67,7 @@ const products = ref([
     price: 149.99,
     status: 'in stock',
   },
-])
-
+]) */
 /**
  * Get the CSS class for the status tag.
  * @param {string} status - The status of the product (e.g., in stock, out of stock, backordered)
@@ -89,10 +98,18 @@ const getStatusClass = (status: string) => {
 
     <div class="py-6">
       <PrimeCard>
-        <!-- <template #title>Simple Card</template> -->
+        <template #title>
+          <div class="flex">
+            <div class="ml-auto">
+              <NuxtLink to="/vendors/products/create">
+                <PrimeButton :label="$t('labels.add')" />
+              </NuxtLink>
+            </div>
+          </div>
+        </template>
         <template #content>
           <DataTable
-            :value="products"
+            :value="objStore.objects"
             class="shadow-none rounded-lg text-sm border-none"
           >
             <!-- Image Column -->
@@ -119,7 +136,7 @@ const getStatusClass = (status: string) => {
             <Column field="sku" header="SKU" />
 
             <!-- Category Column -->
-            <Column field="category" header="Category" />
+            <Column field="categories" header="Category" />
 
             <!-- Brand Column -->
             <Column field="brand" header="Brand" />
@@ -129,7 +146,11 @@ const getStatusClass = (status: string) => {
 
             <!-- Description Column -->
             <!-- Description Column -->
-            <Column field="description" header="Description" class="max-w-[12rem]">
+            <Column
+              field="description"
+              header="Description"
+              class="max-w-[12rem]"
+            >
               <template #body="slotProps">
                 <span
                   class="block truncate"
@@ -144,7 +165,8 @@ const getStatusClass = (status: string) => {
             <Column field="cost" header="Cost">
               <template #body="slotProps">
                 <span class="text-sm font-semibold text-gray-600">
-                  ${{ slotProps.data.cost.toFixed(2) }}
+                  ${{ slotProps.data.cost }}
+                  <!-- ${{ slotProps.data.cost.toFixed(2) }} -->
                 </span>
               </template>
             </Column>
@@ -153,7 +175,8 @@ const getStatusClass = (status: string) => {
             <Column field="price" header="Price">
               <template #body="slotProps">
                 <span class="text-sm font-bold text-gray-800">
-                  ${{ slotProps.data.price.toFixed(2) }}
+                  <!-- ${{ slotProps.data.price.toFixed(2) }} -->
+                  ${{ slotProps.data.price }}
                 </span>
               </template>
             </Column>

@@ -16,13 +16,18 @@
     },
     "vendors": {
       "dashboardDesc": "Central Hub to Manage Your Products",
+      "productCreateDesc": "Add a new product to the system",
       "productInventoryDesc": "Manage your products inventory"
     }
   },
 
   "labels": {
+    "add": "Add",
     "address": "Address",
+    "barcode": "Barcode",
+    "brand": "Brand",
     "business": "Business",
+    "categories": "Categories",
     "dashboard": "Dashboard",
     "description": "Description",
     "email": "Email",
@@ -46,8 +51,19 @@
     "phone": "Phone",
     "previous": "Previous",
     "product": "Product | Products",
+    "productImage": "Product Image",
+    "productType": "Product Type",
+    "productCreate": "New Product",
+    "quantity": "Quantity",
     "register": "Register",
+    "save": "Save",
+    "selectProductType": "Select Type...",
+    "sku": "SKU",
     "user": "User",
     "website": "Website"
+  },
+
+  "messages": {
+    "productCreated": "Product added successfully"
   }
 }

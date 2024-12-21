@@ -18,17 +18,18 @@ export const useProductStore = defineStore('productStore', () => {
     if (!filter) {
       filter = {
         itemsPerPage: -1,
-        sortBy: ['product.name'],
+        sortBy: ['products.name'],
       }
     }
-
     const query = getQueryFromFilter(filter)
-
     const { data, error } = await useApiFetch(`${url}${query}`)
-
     if (!error.value && data.value) {
       // @ts-expect-error undefined data type
-      objects.value = data.value.data.map((obj: Obj) => Obj.fromObject(obj))
+      objects.value = data.value.data
+    } else {
+      if (error.value) {
+        throw error.value
+      }
     }
   }
 
@@ -41,16 +42,19 @@ export const useProductStore = defineStore('productStore', () => {
     }
   }
 
-  async function create(data: Obj) {
+  async function create(data: Obj, businessId: string) {
     const { data: responseData, error } = await useApiFetch(`${url}`, {
       method: 'POST',
-      body: data,
+      body: { ...data, businessId },
     })
-
     if (!error.value && responseData.value) {
       // @ts-expect-error undefined data type
       const obj = Obj.fromObject(responseData.value.data)
       updateObjectsList({ newData: obj, objects })
+    } else {
+      if (error.value) {
+        throw error;
+      }
     }
   }
 
