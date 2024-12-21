@@ -15,7 +15,7 @@ export const useAppStore = defineStore('appStore', () => {
     })
   }
 
-  const toastError = (title = 'labels.operationFailure', detail = '') => {
+  const toastError = ( detail = '', title = 'labels.operationFailure') => {
     toast.add({
       severity: 'error',
       summary: t(`${title}`),
@@ -24,7 +24,7 @@ export const useAppStore = defineStore('appStore', () => {
     })
   }
 
-  const toastSuccess = (title = 'labels.operationSuccess', detail = '') => {
+  const toastSuccess = ( detail = '', title = 'labels.operationSuccess') => {
     toast.add({
       severity: 'success',
       summary: t(`${title}`),
