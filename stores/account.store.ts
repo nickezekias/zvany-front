@@ -102,10 +102,10 @@ export const useAccountStore = defineStore("accountStore", () => {
 
     console.log("RESPONSE.DATA", response.data.value)
 
-    if (response.error) {
+    if (response.error.value) {
       throw response.error
     }
-    setAuthenticatedUser(response.data.value as User)
+    // setAuthenticatedUser(response.data.value as User)
   }
 
   async function resetPassword() {
