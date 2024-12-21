@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
 const model = defineModel();
 const props = defineProps<{
   disable?: boolean;
   errorHelpLabel?: string;
   id: string;
   isError?: boolean;
+  label: string;
   loading?: boolean;
   optionLabel?: string;
   optionValue?: string;
@@ -12,21 +15,29 @@ const props = defineProps<{
   placeholder?: string;
   readonly?: boolean;
 }>();
+const { t } = useI18n()
 </script>
 
 <template>
   <div>
-    <PrimeSelect
-      v-model="model"
-      class="w-full"
-      :invalid="props.isError"
-      :loading="props.loading"
-      :optionLabel="props.optionLabel"
-      :optionValue="props.optionValue"
-      :options="props.options"
-      :placeholder="props.placeholder"
-      :readonly="props.readonly"
-    />
+    <PrimeFloatLabel variant="on">
+      <PrimeSelect
+        :id="props.id"
+        v-model="model"
+        class="w-full"
+        :invalid="props.isError"
+        :label="t(`${props.label}`)"
+        :loading="props.loading"
+        :option-label="props.optionLabel"
+        :option-value="props.optionValue"
+        :options="props.options"
+        :readonly="props.readonly"
+      />
+
+      <label :class="props.isError ? 'nikk-invalid' : ''" :for="props.id">{{
+        $t(`${props.label}`)
+      }}</label>
+    </PrimeFloatLabel>
     <small v-if="props.isError" :id="`${props.id}-help`" class="nikk-invalid">
       {{ $t(`${props.errorHelpLabel}`) }}
     </small>
