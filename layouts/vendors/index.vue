@@ -5,6 +5,7 @@ import TopBar from '@/layouts/vendors/TopBar.vue'
 
 <template>
   <div class="flex">
+    <PrimeToast />
     <div id="app" class="w-full">
       <div
         class="flex bg-surface-50 dark:bg-[#121212] w-screen overflow-hidden"
