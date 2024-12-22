@@ -6,6 +6,7 @@ import { $api } from '@/composables/api'
 export const useAccountStore = defineStore("accountStore", () => {
   const isAuthenticated = computed(() => !!user.value);
   const loading = ref(false)
+  const users: Ref<User[]> = ref([])
   const registerPayload: Ref<RegisterRequest> = ref({
     //business
     businessAddress: '',
@@ -67,12 +68,21 @@ export const useAccountStore = defineStore("accountStore", () => {
   *  ACTIONS
   */
   async function getAuthenticatedUser() {
-    const { error, data } = await useApiFetch("/api/v1/users/authenticated");
+    const { error, data } = await useApiFetch("/api/v1/users/");
     
     if (!error.value && data.value) {
     // @ts-expect-error not yet assigned type for response
       setAuthenticatedUser(User.fromObject(data.value.data))
     } 
+  }
+
+  async function getUsers() {
+    const { error, data } = await useApiFetch("/api/v1/users");
+
+    if (!error.value && data.value) {
+    // @ts-expect-error not yet assigned type for response
+      users.value = data.value.data
+    }
   }
 
   async function login(data: LoginRequest): Promise<void> {
@@ -128,12 +138,14 @@ export const useAccountStore = defineStore("accountStore", () => {
     registerPayload,
     loading,
     user,
+    users,
 
     setLoading,
     setRegisterPayload,
 
     forgotPassword,
     getAuthenticatedUser,
+    getUsers,
     login,
     logout,
     register,

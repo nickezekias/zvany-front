@@ -58,6 +58,22 @@ export const useProductStore = defineStore('productStore', () => {
     }
   }
 
+  async function createPayment(data: Record<string, string | number>) {
+    const { data: responseData, error } = await useApiFetch(`/api/v1/payments`, {
+      method: 'POST',
+      body: { ...data, },
+    })
+
+    if (!error.value && responseData.value) {
+      // @ts-expect-error undefined data type
+      return responseData.value.data
+    } else {
+      if (error.value) {
+        throw error;
+      }
+    }
+  }
+
   async function update(data: Obj) {
     const { data: responseData, error } = await useApiFetch(`${url}/${data.id}?_method=PUT`, {
       method: 'POST',
@@ -85,6 +101,7 @@ export const useProductStore = defineStore('productStore', () => {
     obj,
     objects,
     create,
+    createPayment,
     update,
     destroy,
     get,

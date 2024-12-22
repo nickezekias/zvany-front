@@ -5,11 +5,25 @@ import Column from 'primevue/column'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import InputTextarea from 'primevue/textarea'
+import NikkSelect from '~/components/forms/NikkSelect.vue';
+import type { HttpError } from '~/app/@types/common.interface'
 
 definePageMeta({
   layout: 'vendors',
   middleware: ['sanctum:auth'],
 })
+
+const appStore = useAppStore()
+const accountStore = useAccountStore()
+const objStore = useProductStore()
+
+const loading = ref(false)
+
+try {
+  await accountStore.getUsers()
+} catch (error) {
+  appStore.toastAPIError(error as HttpError)
+}
 
 const payments = ref([
   {
@@ -40,10 +54,22 @@ const closePaymentDialog = () => {
   paymentDialogVisible.value = false
 }
 
-const addPayment = () => {
+const addPayment = async () => {
   if (newPayment.value.user && newPayment.value.amount > 0) {
+    loading.value = true
+    try {
+      await objStore.createPayment({...newPayment.value, user_id: newPayment.value.user})
+      appStore.toastSuccess('Payment added successfully')
+    } catch (error) {
+      appStore.toastAPIError(error as HttpError)
+    } finally {
+      loading.value = false
+    }
     payments.value.push({ ...newPayment.value })
     closePaymentDialog()
+  } else {
+    console.error("new payment", newPayment.value)
+    appStore.toastError('Please fill in all required fields')
   }
 }
 </script>
@@ -59,11 +85,14 @@ const addPayment = () => {
 
     <div class="py-6">
       <!-- Payments Table -->
-       <PrimeCard>
+      <PrimeCard>
         <template #title>
           <div class="flex">
             <div class="ml-auto">
-              <PrimeButton :label="$t('labels.add')" @click="openPaymentDialog()" />
+              <PrimeButton
+                :label="$t('labels.add')"
+                @click="openPaymentDialog()"
+              />
             </div>
           </div>
         </template>
@@ -75,17 +104,18 @@ const addPayment = () => {
             class="text-sm"
           >
             <!-- User Column -->
-            <Column field="user" header="User"/>
-    
+            <Column field="user" header="User" />
+
             <!-- Amount Column -->
             <Column field="amount" header="Amount">
               <template #body="slotProps">
                 <span class="text-sm font-semibold text-gray-600">
-                  ${{ slotProps.data.amount.toFixed(2) }}
+                  ${{ slotProps.data.amount }}
+                  <!-- ${{ slotProps.data.amount.toFixed(2) }} -->
                 </span>
               </template>
             </Column>
-    
+
             <!-- Description Column -->
             <Column field="description" header="Description">
               <template #body="slotProps">
@@ -99,7 +129,7 @@ const addPayment = () => {
             </Column>
           </DataTable>
         </template>
-       </PrimeCard>
+      </PrimeCard>
 
       <!-- Add Payment Dialog -->
       <Dialog
@@ -111,20 +141,20 @@ const addPayment = () => {
       >
         <div class="p-4 space-y-4">
           <div>
-            <label for="user" class="block text-sm font-medium text-gray-700"
-              >User</label
-            >
-            <InputText
-              id="user"
+            <NikkSelect
+              id="type"
               v-model="newPayment.user"
-              class="w-full mt-1"
+              error-help-label="errors.validation.requiredField"
+              :is-error="false"
+              label="labels.name"
+              :options="accountStore.users"
+              option-label="fullName"
+              option-value="id"
             />
           </div>
 
           <div>
-            <label
-              for="amount"
-              class="block text-sm font-medium text-gray-700"
+            <label for="amount" class="block text-sm font-medium text-gray-700"
               >Amount</label
             >
             <InputText
@@ -156,12 +186,11 @@ const addPayment = () => {
             >
               Cancel
             </button>
-            <button
-              class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            <PrimeButton
+              :loading="loading"
+              label="Add Payment"
               @click="addPayment"
-            >
-              Add Payment
-            </button>
+            />
           </div>
         </div>
       </Dialog>
