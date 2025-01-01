@@ -131,7 +131,10 @@ async function submit() {
                   </div>
                 </div>
               </div>
-              <div class="flex justify-end pt-6">
+              <div class="flex justify-end pt-6 gap-4">
+                <NuxtLink to="/vendors/products">
+                  <PrimeButton text :label="$t('labels.cancel')" />
+                </NuxtLink>
                 <PrimeButton type="submit" :loading="loading" :label="$t('labels.save')" />
               </div>
             </div>

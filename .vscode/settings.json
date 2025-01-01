@@ -1,4 +1,8 @@
 {
   "prettier.semi": false,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "cSpell.words": [
+    "Nikk",
+    "Nuxt"
+  ]
 }
