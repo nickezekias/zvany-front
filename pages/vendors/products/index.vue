@@ -2,6 +2,7 @@
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import type { HttpError } from '~/app/@types/common.interface'
+import { useI18n } from 'vue-i18n'
 
 definePageMeta({
   layout: 'vendors',
@@ -11,11 +12,38 @@ definePageMeta({
 
 const objStore = useProductStore()
 const appStore = useAppStore()
+const { t } = useI18n()
+
+const activeRowId = ref('fdsf')
+const menu = ref()
+const rowActionsItems = ref([
+  {
+    label: t('labels.action', 2),
+    items: [
+      {
+        label: t('labels.edit'),
+        icon: 'pi pi-pencil',
+        route: `/vendors/products/update`
+      },
+      {
+        label: t('labels.delete'),
+        icon: 'pi pi-trash',
+      },
+    ],
+  },
+])
+const selectedObjects = ref([])
 
 try {
   await objStore.getAll()
-} catch(e) {
+} catch (e) {
   appStore.toastAPIError(e as HttpError)
+}
+
+const toggle = (event: Event, id: string) => {
+  activeRowId.value = id
+  console.log("actRowId", activeRowId.value)
+  menu.value.toggle(event)
 }
 
 /* const products = ref([
@@ -97,7 +125,7 @@ const getStatusClass = (status: string) => {
     </div>
 
     <div class="py-6">
-      <PrimeCard>
+      <PrimeCard class="shadow-none">
         <template #title>
           <div class="flex">
             <div class="ml-auto">
@@ -109,16 +137,23 @@ const getStatusClass = (status: string) => {
         </template>
         <template #content>
           <DataTable
+            v-model:selection="selectedObjects"
             :value="objStore.objects"
+            data-key="id"
             class="shadow-none rounded-lg text-sm border-none"
+            scrollable
+            table-style="min-width: 50rem"
+            scroll-height="flex"
           >
+            <Column selection-mode="multiple" header-style="width: 3rem" />
+
             <!-- Image Column -->
-            <Column field="image" header="Image" style="width: 80px">
+            <Column field="image" header="Image" style="width: 40px">
               <template #body="slotProps">
                 <img
                   :src="slotProps.data.image"
                   alt="Product Image"
-                  class="w-12 h-12 object-cover rounded-md"
+                  class="w-6 h-6 object-cover rounded-md"
                 >
               </template>
             </Column>
@@ -133,7 +168,7 @@ const getStatusClass = (status: string) => {
             </Column>
 
             <!-- SKU Column -->
-            <Column field="sku" header="SKU" />
+            <Column field="sku" header="SKU" class="min-w-[10rem]" />
 
             <!-- Category Column -->
             <Column field="categories" header="Category" />
@@ -182,7 +217,7 @@ const getStatusClass = (status: string) => {
             </Column>
 
             <!-- Status Column -->
-            <Column field="status" header="Status">
+            <Column field="status" header="Status" class="min-w-[8rem]">
               <template #body="slotProps">
                 <span
                   :class="getStatusClass(slotProps.data.status)"
@@ -190,6 +225,58 @@ const getStatusClass = (status: string) => {
                 >
                   {{ slotProps.data.status }}
                 </span>
+              </template>
+            </Column>
+
+            <Column
+              key="actions"
+              field="actions"
+              :header="$t('labels.action', 2)"
+            >
+              <template #body="{ data }">
+                <div class="card flex justify-center">
+                  <PrimeButton
+                    type="button"
+                    text
+                    plain
+                    icon="pi pi-ellipsis-v"
+                    aria-haspopup="true"
+                    aria-controls="overlay_menu"
+                    @click="
+                      (event: Event) => {
+                        toggle(event, data.id)
+                      }
+                    "
+                  />
+                  <PrimeMenu
+                    id="overlay_menu"
+                    ref="menu"
+                    :model="rowActionsItems"
+                    :popup="true"
+                  >
+                    <template #item="{ item }">
+                      <NuxtLink v-if="item.route" :to="`${item.route}?id=${activeRowId}`">
+                        <PrimeButton
+                          class="w-full justify-start"
+                          small
+                          text
+                          plain
+                          :icon="item.icon"
+                          :label="`${item.label}`"
+                        />
+                      </NuxtLink>
+                      <PrimeButton
+                        v-else
+                        class="w-full justify-start"
+                        severity="danger"
+                        small
+                        text
+                        :icon="item.icon"
+                        :label="`${item.label}`"
+                      />
+                    </template>
+                  </PrimeMenu>
+                </div>
               </template>
             </Column>
           </DataTable>
