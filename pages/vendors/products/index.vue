@@ -64,7 +64,6 @@ async function onConfirmDelete() {
 
 const toggle = (event: Event, id: string) => {
   activeRowId.value = id
-  console.log("actRowId", activeRowId.value)
   menu.value.toggle(event)
 }
 

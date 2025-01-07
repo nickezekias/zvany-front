@@ -36,7 +36,6 @@ async function submit() {
   try {
     const isFormValid = true
     if (isFormValid) {
-      console.log("form_data", obj.value)
       await objStore.update(obj.value)
       appStore.toastSuccess('messages.productUpdated')
       navigateTo('/vendors/products')
