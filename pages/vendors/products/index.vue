@@ -3,6 +3,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import type { HttpError } from '~/app/@types/common.interface'
 import { useI18n } from 'vue-i18n'
+import DeleteDialog from '~/components/crud/DeleteDialog.vue'
 
 definePageMeta({
   layout: 'vendors',
@@ -14,7 +15,9 @@ const objStore = useProductStore()
 const appStore = useAppStore()
 const { t } = useI18n()
 
-const activeRowId = ref('fdsf')
+const activeRowId = ref('')
+const isDeleteDialog = ref(false)
+const isDeleteDialogLoading = ref(false)
 const menu = ref()
 const rowActionsItems = ref([
   {
@@ -28,6 +31,7 @@ const rowActionsItems = ref([
       {
         label: t('labels.delete'),
         icon: 'pi pi-trash',
+        command: () => { isDeleteDialog.value = true; }
       },
     ],
   },
@@ -38,6 +42,24 @@ try {
   await objStore.getAll()
 } catch (e) {
   appStore.toastAPIError(e as HttpError)
+}
+
+function closeDeleteDialog() {
+  isDeleteDialogLoading.value = false
+  isDeleteDialog.value = false
+}
+
+async function onConfirmDelete() {
+  isDeleteDialogLoading.value = true
+  try {
+    await objStore.destroy(activeRowId.value)
+    isDeleteDialog.value = false
+    appStore.toastSuccess('features.product.deleteSuccessMessage')
+  } catch(e) {
+    appStore.toastAPIError(e as HttpError)
+  } finally {
+    isDeleteDialogLoading.value = false
+  }
 }
 
 const toggle = (event: Event, id: string) => {
@@ -283,5 +305,7 @@ const getStatusClass = (status: string) => {
         </template>
       </PrimeCard>
     </div>
+
+    <DeleteDialog v-model="isDeleteDialog" :loading="isDeleteDialogLoading" @cancel="closeDeleteDialog" @confirmed="onConfirmDelete" />
   </div>
 </template>

@@ -14,6 +14,11 @@
     "account": {
       "registerSuccessMessage": "Account created successfully"
     },
+    "product": {
+      "confirmDeleteMessage": "Do you really want to delete this product, note this action is irreversible!?",
+      "deleteProduct": "Delete Product",
+      "deleteSuccessMessage": "Product successfully deleted"
+    },
     "vendors": {
       "dashboardDesc": "Central Hub to Manage Your Products",
       "productCreateDesc": "Add a new product to the system",

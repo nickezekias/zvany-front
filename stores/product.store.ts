@@ -39,6 +39,8 @@ export const useProductStore = defineStore('productStore', () => {
     if (!error.value && data.value) {
       // @ts-expect-error undefined data type
       obj.value = data.value.data
+    } else if (error.value) {
+      throw error.value
     }
   }
 
@@ -98,6 +100,8 @@ export const useProductStore = defineStore('productStore', () => {
 
     if (!error.value && data.value) {
       updateObjectsList({ deleteId: ref(id), objects })
+    } else if (error.value) {
+      throw error.value
     }
   }
 
