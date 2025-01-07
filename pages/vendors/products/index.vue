@@ -152,7 +152,7 @@ const getStatusClass = (status: string) => {
           <div class="flex">
             <div class="ml-auto">
               <NuxtLink to="/vendors/products/create">
-                <PrimeButton :label="$t('labels.add')" />
+                <PrimeButton icon="pi pi-plus" :label="$t('labels.add')" />
               </NuxtLink>
             </div>
           </div>
