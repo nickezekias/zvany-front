@@ -28,6 +28,7 @@
   },
 
   "labels": {
+    "account": "Account",
     "action": "Action | Actions",
     "add": "Add",
     "address": "Address",
@@ -35,6 +36,7 @@
     "brand": "Brand",
     "business": "Business",
     "cancel": "Cancel",
+    "cart": "Cart",
     "categories": "Categories",
     "dashboard": "Dashboard",
     "delete": "Delete",
@@ -43,6 +45,7 @@
     "email": "Email",
     "female": "Female",
     "firstName": "First Name",
+    "home": "Home",
     "inventory": "Inventory",
     "inventoryAdjustment": "Inventory Adjustment | Inventory Adjustments",
     "lastName": "Last Name",
@@ -71,6 +74,7 @@
     "register": "Register",
     "save": "Save",
     "selectProductType": "Select Type...",
+    "shop": "Shop",
     "sku": "SKU",
     "update": "Update",
     "user": "User",

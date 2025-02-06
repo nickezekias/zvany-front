@@ -1,23 +1,19 @@
+<script setup lang="ts">
+import TopBar from '~/layouts/TopBar.vue'
+import MobileTopBar from '~/layouts/mobile/TopBar.vue'
+import MobileBottomBar from '~/layouts/mobile/BottomBar.vue'
+import { useScreenSize } from '~/composables/useScreenSize'
+
+const { isMobile } = useScreenSize()
+</script>
 <template>
   <div class="h-screen w-screen flex-col">
     <PrimeToast />
-    <PrimeToolbar class="py-0 rounded-none border-b">
-      <template #start>
-        <div class="logo">
-          <span>Zvany</span>
-        </div>
-      </template>
-
-      <template #end>
-        <router-link to="/register" active-class="border-b border-primary" class="py-2">
-          <PrimeButton text plain class="" :label="$t('labels.register')" />
-        </router-link>
-
-        <router-link to="/login" active-class="border-b border-primary" class="ml-3 py-2">
-          <PrimeButton text plain class="" :label="$t('labels.login')" />
-        </router-link>
-      </template>
-    </PrimeToolbar>
+  
+    <MobileTopBar v-if="isMobile" />
+    <TopBar v-else/>
+    
+    <MobileBottomBar v-if="isMobile" />
 
     <main class="mt-4 md:mt-16">
       <slot />
