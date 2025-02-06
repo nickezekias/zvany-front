@@ -48,7 +48,12 @@ export const useAccountStore = defineStore("accountStore", () => {
       }
       return ref(null)
     },
-    set: (value: User | null) => user.value = value
+    set: (value: User | null) => {
+      if (value != null) {
+        return user.value = User.fromObject(value)
+      }
+      return user.value = null
+    }
   })
 
   const setLoading = (val: boolean) => {
