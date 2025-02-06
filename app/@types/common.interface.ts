@@ -78,4 +78,12 @@ interface HttpError {
   value?: HttpError
 }
 
-export type { DBGetQueryFilter, HttpError };
+interface MenuItem {
+  label: string
+  icon?: string
+  route?: string
+  children?: Array<MenuItem>
+  command?: () => void
+}
+
+export type { DBGetQueryFilter, HttpError, MenuItem };

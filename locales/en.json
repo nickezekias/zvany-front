@@ -51,6 +51,8 @@
     "login": "Login",
     "logout": "Logout",
     "male": "Male",
+    "massCreate": "Mass Create",
+    "massCreateProducts": "Mass Create Products",
     "name": "Name",
     "next": "Next",
     "operationFailure": "Operation Failure",
@@ -76,7 +78,7 @@
   },
 
   "messages": {
-    "productCreated": "Product added successfully",
+    "productCreated": "Product added successfully | Products added successfully",
     "productUpdated": "Product updated successfully"
   }
 }

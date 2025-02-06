@@ -60,6 +60,10 @@ export const useProductStore = defineStore('productStore', () => {
     }
   }
 
+  async function massCreate(data: Obj[], businessId: string) {
+    // do something
+  }
+
   async function createPayment(data: Record<string, string | number>) {
     const { data: responseData, error } = await useApiFetch(`/api/v1/payments`, {
       method: 'POST',
@@ -109,6 +113,7 @@ export const useProductStore = defineStore('productStore', () => {
     obj,
     objects,
     create,
+    massCreate,
     createPayment,
     update,
     destroy,

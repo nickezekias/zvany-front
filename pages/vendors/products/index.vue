@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import type { HttpError } from '~/app/@types/common.interface'
+import type { HttpError, MenuItem } from '~/app/@types/common.interface'
 import { useI18n } from 'vue-i18n'
 import DeleteDialog from '~/components/crud/DeleteDialog.vue'
+import MassCreateDialog from './MassCreateDialog.vue'
 
 definePageMeta({
   layout: 'vendors',
@@ -16,8 +17,16 @@ const appStore = useAppStore()
 const { t } = useI18n()
 
 const activeRowId = ref('')
+const actionItems: Ref<MenuItem[]> = ref([
+  {
+    label: t('labels.massCreate'),
+    icon: 'pi pi-list-check',
+    command: () => { isMassCreateDialog.value = true },
+  },
+])
 const isDeleteDialog = ref(false)
 const isDeleteDialogLoading = ref(false)
+const isMassCreateDialog = ref(false)
 const menu = ref()
 const rowActionsItems = ref([
   {
@@ -26,12 +35,14 @@ const rowActionsItems = ref([
       {
         label: t('labels.edit'),
         icon: 'pi pi-pencil',
-        route: `/vendors/products/update`
+        route: `/vendors/products/update`,
       },
       {
         label: t('labels.delete'),
         icon: 'pi pi-trash',
-        command: () => { isDeleteDialog.value = true; }
+        command: () => {
+          isDeleteDialog.value = true
+        },
       },
     ],
   },
@@ -55,7 +66,7 @@ async function onConfirmDelete() {
     await objStore.destroy(activeRowId.value)
     isDeleteDialog.value = false
     appStore.toastSuccess('features.product.deleteSuccessMessage')
-  } catch(e) {
+  } catch (e) {
     appStore.toastAPIError(e as HttpError)
   } finally {
     isDeleteDialogLoading.value = false
@@ -150,9 +161,12 @@ const getStatusClass = (status: string) => {
         <template #title>
           <div class="flex">
             <div class="ml-auto">
-              <NuxtLink to="/vendors/products/create">
-                <PrimeButton icon="pi pi-plus" :label="$t('labels.add')" />
-              </NuxtLink>
+              <PrimeSplitButton
+                icon="pi pi-plus"
+                :label="$t('labels.add')"
+                :model="actionItems"
+                @click="navigateTo('/vendors/products/create')"
+              />
             </div>
           </div>
         </template>
@@ -276,7 +290,10 @@ const getStatusClass = (status: string) => {
                     :popup="true"
                   >
                     <template #item="{ item }">
-                      <NuxtLink v-if="item.route" :to="`${item.route}?id=${activeRowId}`">
+                      <NuxtLink
+                        v-if="item.route"
+                        :to="`${item.route}?id=${activeRowId}`"
+                      >
                         <PrimeButton
                           class="w-full justify-start"
                           small
@@ -305,6 +322,13 @@ const getStatusClass = (status: string) => {
       </PrimeCard>
     </div>
 
-    <DeleteDialog v-model="isDeleteDialog" :loading="isDeleteDialogLoading" @cancel="closeDeleteDialog" @confirmed="onConfirmDelete" />
+    <MassCreateDialog v-model="isMassCreateDialog" @close="isMassCreateDialog = false" />
+
+    <DeleteDialog
+      v-model="isDeleteDialog"
+      :loading="isDeleteDialogLoading"
+      @cancel="closeDeleteDialog"
+      @confirmed="onConfirmDelete"
+    />
   </div>
 </template>
