@@ -7,7 +7,7 @@ const search = ref('')
 </script>
 
 <template>
-  <PrimeToolbar class="py-2 px-12 rounded-none border-b">
+  <PrimeToolbar class="py-2 px-12 lg:px-24 rounded-none border-b">
     <template #start>
       <div class="logo">
         <router-link to="/">

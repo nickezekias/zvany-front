@@ -15,7 +15,7 @@ const { isMobile } = useScreenSize()
     
     <MobileBottomBar v-if="isMobile" />
 
-    <main class="mt-4 md:mt-16">
+    <main>
       <slot />
     </main>
   </div>
