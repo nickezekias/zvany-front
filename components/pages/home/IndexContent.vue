@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import HeroComponent from './HeroComponent.vue';
 import DefaultProductCard from '~/components/products/DefaultCard.vue';
+
+import type { HttpError } from '~/app/@types/common.interface'
+
+const objStore = useProductStore()
+const appStore = useAppStore()
+
+try {
+  await objStore.getAll()
+} catch (e) {
+  appStore.toastAPIError(e as HttpError)
+}
 </script>
 
 <template>
@@ -39,7 +50,9 @@ import DefaultProductCard from '~/components/products/DefaultCard.vue';
         <PrimeDivider class="mt-0" />
         <h3 class="text-xl font-medium mb-4">Featured Phones</h3>
         <div class="flex-grow flex gap-6">
-          <DefaultProductCard v-for="i in 5" :key="i" class="w-full" @click="navigateTo('/p')" />
+          <NuxtLink v-for="obj in objStore.objects" :key="obj.id" class="w-full" to="/p">
+            <DefaultProductCard :obj="obj" />
+          </NuxtLink>
         </div>
         <PrimeDivider class="mb-0" />
       </div>

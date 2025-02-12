@@ -62,6 +62,7 @@ export const useProductStore = defineStore('productStore', () => {
 
   async function massCreate(data: Obj[], businessId: string) {
     // do something
+    console.log("DATA", data, "BUSINESS ID", businessId)
   }
 
   async function createPayment(data: Record<string, string | number>) {
