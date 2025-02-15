@@ -11,6 +11,7 @@ declare module 'vue' {
     PrimeButton: typeof import('primevue/button')['default']
     PrimeCard: typeof import('primevue/card')['default']
     PrimeChart: typeof import('primevue/chart')['default']
+    PrimeCheckbox: typeof import('primevue/checkbox')['default']
     PrimeColumn: typeof import('primevue/column')['default']
     PrimeDataTable: typeof import('primevue/datatable')['default']
     PrimeDialog: typeof import('primevue/dialog')['default']
