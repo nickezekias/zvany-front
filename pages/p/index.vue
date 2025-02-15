@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import Product from '~/app/models/product.model'
+// import Obj from '~/app/models/product.model'
+import type { HttpError } from '~/app/@types/common.interface'
 
 import NikkInputNumber from '@/components/forms/NikkInputNumber.vue'
 
+const appStore = useAppStore()
+const objStore = useProductStore()
+const route = useRoute()
+
+const id = route.query.id
 const loading = ref(false)
-const obj = ref(Product.initEmpty())
+const productQuantity = ref(1)
+try {
+  if (id) {
+    await objStore.get(`${id}`)
+  }
+} catch (e) {
+  appStore.toastAPIError(e as HttpError)
+}
 </script>
 
 <template>
@@ -13,33 +26,32 @@ const obj = ref(Product.initEmpty())
       <div class="h-96 bg-gray-50" />
     </div>
     <div class="w-6/12 flex flex-col gap-4">
-      <h1 class="product-name text-xl font-medium">iPhone 14 128/256 GB</h1>
+      <h1 class="product-name text-2xl text-primary font-medium">
+        {{ objStore.obj?.name }}
+      </h1>
       <span>
-        Share
+        {{ $t('labels.share') }}
         <i class="pi pi-facebook ms-5" />
         <i class="pi pi-instagram ms-5" />
         <i class="pi pi-twitter ms-5" />
       </span>
-      <span class="text-4xl font-black">1 500 000 F</span>
+      <span class="text-4xl font-black">{{ objStore.obj?.price }}</span>
       <span>
-        <span class="text-gray-300">Availability</span>
-        <span class="font-normal ms-4">In Stock</span>
+        <span class="text-gray-300">{{ $t('labels.availability') }}</span>
+        <span class="font-normal ms-4">{{ objStore.obj?.quantity }}</span>
       </span>
       <span class="text-primary text-sm">
-        This product is available for free shipping
+        {{ $t('features.product.productDetail.availableForFreeShipping') }}
       </span>
 
       <h6>
-        Lorem ipsum dolor sit amet adiscisping. Lorem dolor sit amet
-        adisisciping.Lorem dolor sit amet adisisciping. Lorem dolor sit amet
-        adisisciping. Lorem dolor sit amet adisisciping. Lorem dolor sit amet
-        adisisciping.
+        {{ objStore.obj?.description }}
       </h6>
 
       <div class="flex justify-between gap-4">
         <NikkInputNumber
           id="quantity"
-          v-model="obj.quantity"
+          v-model="productQuantity"
           error-help-label="errors.validation.requiredField"
           :is-error="false"
           label="labels.quantity"
@@ -50,6 +62,7 @@ const obj = ref(Product.initEmpty())
 
         <div class="flex-grow">
           <PrimeButton
+            disabled
             :loading="loading"
             :label="$t('labels.addToCart')"
             fluid
@@ -60,30 +73,43 @@ const obj = ref(Product.initEmpty())
         <PrimeButton outlined rounded icon="pi pi-heart" />
       </div>
 
-      <span>I agree with terms and conditions</span>
+      <div class="flex items-center gap-2">
+        <PrimeCheckbox input-id="terms-conditions" name="tc" value="1" />
+        <label for="terms-conditions">
+          {{ $t('labels.agreeTermsConditions') }}
+        </label>
+      </div>
 
-      <PrimeButton
-        @click="navigateTo('/checkout')"
+      <!-- <PrimeButton
         fluid
         :loading="loading"
         :label="$t('labels.buyNow')"
         rounded
         severity="contrast"
+        @click="navigateTo('/checkout')"
+      /> -->
+
+      <PrimeButton
+        fluid
+        :loading="loading"
+        :label="$t('labels.payWithPaypal')"
+        rounded
+        severity="contrast"
       />
 
       <span>
-        <span class="text-gray-50">Categories</span>
-        <i class="ms-5">Smartphone, iPhone, Electronics</i>
+        <span class="text-gray-50 text-sm">{{ $t('labels.categories') }}</span>
+        <i class="ms-5">{{ objStore.obj?.categories }}</i>
       </span>
 
-      <span>
-        <span class="text-gray-200">Tags</span>
+      <!-- <span>
+        <span class="text-gray-200">{{ $t('label.tag', 2) }}</span>
         <i class="ms-5">Phone, Mobile, iPhone, Electronics</i>
-      </span>
+      </span> -->
 
       <span>
-        <span class="text-gray-200">Vendor</span>
-        <i class="ms-5">Junior Electronics</i>
+        <span class="text-gray-200 text-sm">{{ $t('labels.vendor') }}</span>
+        <span class="ms-5 font-medium text-primary">IgnisLab</span>
       </span>
     </div>
 

@@ -17,7 +17,10 @@
     "product": {
       "confirmDeleteMessage": "Do you really want to delete this product, note this action is irreversible!?",
       "deleteProduct": "Delete Product",
-      "deleteSuccessMessage": "Product successfully deleted"
+      "deleteSuccessMessage": "Product successfully deleted",
+      "productDetail": {
+        "availableForFreeShipping": "This product is available for free shipping"
+      }
     },
     "vendors": {
       "dashboardDesc": "Central Hub to Manage Your Products",
@@ -33,7 +36,9 @@
     "add": "Add",
     "address": "Address",
     "addToCart": "Add To Cart",
+    "agreeTermsConditions": "I agree with terms and conditions",
     "apartment": "Apartment",
+    "availability": "Availability",
     "barcode": "Barcode",
     "brand": "Brand",
     "business": "Business",
@@ -72,6 +77,7 @@
     "password": "Password",
     "passwordConfirm": "Confirm Password",
     "payment": "Payment | Payments",
+    "payWithPaypal": "Pay with PayPal",
     "phone": "Phone",
     "previous": "Previous",
     "product": "Product | Products",
@@ -83,11 +89,14 @@
     "register": "Register",
     "save": "Save",
     "selectProductType": "Select Type...",
+    "share": "Share",
     "shop": "Shop",
     "shopNow": "Shop Now",
     "sku": "SKU",
+    "tag": "Tag | Tags",
     "update": "Update",
     "user": "User",
+    "vendor": "Vendor",
     "website": "Website"
   },
 

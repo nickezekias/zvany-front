@@ -50,7 +50,7 @@ try {
         <PrimeDivider class="mt-0" />
         <h3 class="text-xl font-medium mb-4">Featured Phones</h3>
         <div class="flex-grow flex gap-6">
-          <NuxtLink v-for="obj in objStore.objects" :key="obj.id" class="w-full" to="/p">
+          <NuxtLink v-for="obj in objStore.objects" :key="obj.id" class="w-full" :to="`/p?id=${obj.id}`">
             <DefaultProductCard :obj="obj" />
           </NuxtLink>
         </div>
