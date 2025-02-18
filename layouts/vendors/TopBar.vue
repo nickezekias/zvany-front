@@ -5,7 +5,9 @@ import UserAvatarMenu from '@/components/user/UserAvatarMenu.vue'
   <PrimeToolbar class="py-0 rounded-none">
     <template #start>
       <div class="logo">
-        <span class="font-bold">Zvany</span>
+        <router-link to="/">
+          <span class="font-bold text-xl">Zvany</span>
+        </router-link>
       </div>
     </template>
 

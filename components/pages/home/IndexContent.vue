@@ -23,11 +23,11 @@ try {
         <div class="zvany-vintage-card p-4 py-6 border">
           <div class="absolute top-0 left-0 h-100 w-100 bg-black opacity-45" />
 
-          <div class="flex flex-col items-center h-100 w-100 text-white">
+          <div class="flex flex-col items-center h-100 w-100">
             <span class="text-2xl font-bold"> Zvany Vinted </span>
 
             <div class="flex justify-center items-center p-8 rounded-full mt-6 bg-green-500">
-              <span class="pi pi-camera text-6xl"/>
+              <span class="pi pi-camera text-6xl text-white"/>
             </div>
 
             <span class="mt-4 font-light text-center">
