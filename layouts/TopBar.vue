@@ -10,9 +10,9 @@ const search = ref('')
   <PrimeToolbar class="py-2 px-12 lg:px-24 rounded-none border-b">
     <template #start>
       <div class="logo">
-        <router-link to="/">
+        <NuxtLink to="/">
           <span class="font-bold text-xl">Zvany</span>
-        </router-link>
+        </NuxtLink>
       </div>
     </template>
 
@@ -92,23 +92,23 @@ const search = ref('')
         </PrimeButton>
       </div>
 
-      <router-link
+      <NuxtLink
         v-if="!accountStore.isAuthenticated"
         to="/login"
         active-class="border-b border-primary"
         class="ml-3 py-2"
       >
         <PrimeButton text plain class="" :label="$t('labels.login')" />
-      </router-link>
+      </NuxtLink>
 
-      <router-link
+      <NuxtLink
         v-if="!accountStore.isAuthenticated"
         to="/register"
         active-class="border-b border-primary"
         class="py-2"
       >
         <PrimeButton text plain class="" :label="$t('labels.register')" />
-      </router-link>
+      </NuxtLink>
     </template>
   </PrimeToolbar>
 </template>

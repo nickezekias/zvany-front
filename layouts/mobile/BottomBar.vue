@@ -43,7 +43,7 @@ const items = [
   >
     <template #center>
       <div class="flex justify-between w-screen h-full px-3">
-        <router-link
+        <NuxtLink
           v-for="item in items"
           :key="item.name"
           :to="item.route ? `${route}` : '#'"
@@ -64,7 +64,7 @@ const items = [
               >
             </div>
           </PrimeButton>
-        </router-link>
+        </NuxtLink>
       </div>
     </template>
   </PrimeToolbar>

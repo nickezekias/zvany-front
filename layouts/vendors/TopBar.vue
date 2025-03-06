@@ -5,9 +5,9 @@ import UserAvatarMenu from '@/components/user/UserAvatarMenu.vue'
   <PrimeToolbar class="py-0 rounded-none">
     <template #start>
       <div class="logo">
-        <router-link to="/">
+        <NuxtLink to="/">
           <span class="font-bold text-xl">Zvany</span>
-        </router-link>
+        </NuxtLink>
       </div>
     </template>
 

@@ -23,17 +23,17 @@ const accountStore = useAccountStore()
           v-if="!accountStore.isAuthenticated"
           class="flex justify-between w-full mt-8"
         >
-          <router-link to="/register">
+          <NuxtLink to="/register">
             <PrimeButton rounded class="" :label="$t('labels.register')" />
-          </router-link>
+          </NuxtLink>
 
-          <router-link to="/login">
+          <NuxtLink to="/login">
             <PrimeButton text rounded class="" :label="$t('labels.login')" />
-          </router-link>
+          </NuxtLink>
         </div>
 
         <div class="flex justify-center" v-else>
-          <router-link to="/vendors">
+          <NuxtLink to="/vendors">
             <PrimeButton
               icon="pi pi-th-large"
               text
@@ -42,7 +42,7 @@ const accountStore = useAccountStore()
               class=""
               :label="$t('labels.vendorDashboard')"
             />
-          </router-link>
+          </NuxtLink>
         </div>
       </div>
 
