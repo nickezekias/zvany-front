@@ -4,7 +4,9 @@ import useApiFetch from "~/composables/useApiFetch";
 import { $api } from '@/composables/api'
 
 export const useAccountStore = defineStore("accountStore", () => {
-  const isAuthenticated = computed(() => !!user.value);
+  const isAuthenticated = computed(() => {
+    return user.value != null &&  user.value.id
+  });
   const loading = ref(false)
   const users: Ref<User[]> = ref([])
   const registerPayload: Ref<RegisterRequest> = ref({
@@ -41,18 +43,21 @@ export const useAccountStore = defineStore("accountStore", () => {
   })
 
   const user = computed({
-    get: (): Ref<User|null> => {
+    get: (): User|null => {
       const sanctumUser = useSanctumUser<Record<string, User>>().value
       if (sanctumUser) {
-        return ref(User.fromObject(sanctumUser.data))
+        return sanctumUser.data
+        // return User.fromObject(sanctumUser.data)
       }
-      return ref(null)
+      return null
     },
     set: (value: User | null) => {
-      if (value != null) {
-        return user.value = User.fromObject(value)
+      console.log("User_value_account_store", value)
+      /* if (value != null) {
+        user.value = value
+        // return user.value = User.fromObject(value)
       }
-      return user.value = null
+      user.value = null */
     }
   })
 

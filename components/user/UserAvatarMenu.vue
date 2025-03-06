@@ -42,7 +42,7 @@ async function onLogout() {
       @click="toggle"
     >
       <PrimeAvatar
-        :label="accountStore.user.value.initials"
+        :label="accountStore.user?.initials"
         shape="circle"
         class="text-primary bg-[#0099ff10] border-2 border-primary"
         style="width: 2.5rem; height: 2.5rem"

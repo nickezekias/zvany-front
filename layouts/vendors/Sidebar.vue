@@ -127,7 +127,7 @@ function setActiveItem(item: MenuItem) {
 <template>
   <div class="w-64 shadow-sm bg-white dark:bg-[#18181b]">
     <h1 class="text-2xl font-bold py-4 px-3">
-      {{ accountStore.user.value?.business?.name }}
+      {{ accountStore.user?.business?.name }}
     </h1>
     <ul class="p-2">
       <li v-for="item in menuItems" :key="item.label" class="mb-1">
